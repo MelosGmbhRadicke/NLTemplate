@@ -8,5 +8,8 @@ You need cmake and make. Do this...
   cd ./build
   cmake -G "Unix Makefiles" ../
   make
-  make install
+  su -c 'make install'
+  su -c 'echo "/usr/local/lib/nltemplate/" > /etc/ld.so.conf.d/nltemplate.conf'
+  su -c 'ldconfig'
+
 ```
