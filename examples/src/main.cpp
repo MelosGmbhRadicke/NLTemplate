@@ -36,6 +36,16 @@ static void testFile() {
     }
 
     t.render( cout ); // Render the template with the variables we've set above
+
+    // =============== LaTeX ===============
+
+    std::cout << "=============================================================" << std::endl;
+    LoaderFile loader2;
+
+    Template t2( loader2 );
+    t2.load( "view/simple_plot.templat.tex" );      // Load & parse the main template and its dependencies.
+    t2.set( "town", "Augsburg" );    // Set a top-level variable
+    t2.render( cout ); // Render the template with the variables we've set above
 }
 
 
@@ -57,7 +67,7 @@ static void testMemory() {
 
 int main(int, char *[] ) {
     testFile();
-    testMemory();
+//     testMemory();
 
 
     return 0;

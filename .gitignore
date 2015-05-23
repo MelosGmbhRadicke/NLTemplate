@@ -2,3 +2,7 @@ NLTemplate.xcodeproj/xcuserdata/
 NLTemplate.xcodeproj/project.xcworkspace/
 .DS_Store
 examples/build/
+*.aux
+*.log
+*.pdf
+

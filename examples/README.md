@@ -5,6 +5,9 @@ A demonstrator application
 ## Dependencies ##
 
 - cmake
+- LaTeX
+ * pdfladex
+ * texlive-pgfplots
 
 
 ## Build ##
