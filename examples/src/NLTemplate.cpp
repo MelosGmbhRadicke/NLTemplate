@@ -337,6 +337,7 @@ Loader::Result LoaderFile::load( const string & name ) {
     input.open( name );
 
     if ( ! input.is_open() ) {
+        std::cerr << "Could not open file " <<  name << std::endl;
         return { false, nullptr, "Could not open file " + name };
     }
 
