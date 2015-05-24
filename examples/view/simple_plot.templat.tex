@@ -32,11 +32,12 @@ A simple plot demo. Plot shows data from 2009 to 2014 in {{ factory }}
     ({{ year }},{{ value }}e6){% endblock %}
 };
 %
-\addplot[red,sharp plot,update limits=false] coordinates {
-    (2009,65e6)
-    (2015,54e6)
-}
+\addplot[red,sharp plot,update limits=false] coordinates { {% block average %}
+    ({{ year }},{{ value }}e6){% endblock %}
+};
+
 node[above] at (axis cs:2012,60e6) {Employee absolut};
+
 \legend{Administration,Service,Development}
 
 \end{axis}

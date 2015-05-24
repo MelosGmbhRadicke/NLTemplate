@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 
+
 #include "NLTemplate.h"
 
 
@@ -11,7 +12,7 @@ using namespace NL::Template;
 
 static void createSimpleHTML() {
 
-    std::cout << "============== create simple-example.html ===================" << std::endl;
+    std::cout << "============== create /tmp/simple-example.html ===================" << std::endl;
     const char *titles[ 3 ] = { "Chico", "Harpo", "Groucho" };
     const char *details[ 3 ] = { "Red", "Green", "Blue" };
 
@@ -39,7 +40,7 @@ static void createSimpleHTML() {
         }
     }
 
-    std::ofstream htmlFile ("simple-example.html",std::ofstream::binary);
+    std::ofstream htmlFile ("/tmp/simple-example.html",std::ofstream::binary);
     t.render( htmlFile ); // Render the template with the variables we've set above
     htmlFile.close();
 
@@ -52,7 +53,7 @@ static void createTeX() {
     const char *serviceValuse[ repeatCount ] = { "70", "85", "59", "65", "70" };
     const char *developmentValuse[ repeatCount ] = { "60", "65", "69", "65", "70" };
 
-    std::cout << "============== create plot-example.TeX ===================" << std::endl;
+    std::cout << "============== create /tmp/plot-example.TeX ===================" << std::endl;
     LoaderFile loader;
 
     Template t( loader );
@@ -77,8 +78,14 @@ static void createTeX() {
         t.block( "development" )[ i ].set( "value", developmentValuse[ i ] );
     }
 
+    t.block( "average" ).repeat( repeatCount );
+    for ( int i=0; i < repeatCount; i++ ) {
+        t.block( "average" )[ i ].set( "year", year[ i ] );
+        int average = (std::stoi(administrationValuse[ i ]) + std::stoi(serviceValuse[ i ]) + std::stoi(developmentValuse[ i ]) ) / 3;
+        t.block( "average" )[ i ].set( "value", std::to_string(average) );
+    }
 
-    std::ofstream teXfile ("plot-example.TeX",std::ofstream::binary);
+    std::ofstream teXfile ("/tmp/plot-example.TeX",std::ofstream::binary);
     t.render( teXfile ); // Render the template with the variables we've set above
     teXfile.close();
 
