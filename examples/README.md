@@ -14,8 +14,12 @@ A demonstrator application
 
 > mkdir ./build
 > cd ./build
-> cmake -G "Unix Makefiles"  ../
+> cmake ../
 > make
+
+or alternativ with gnumake only
+
+
 
 ## todo ##
 

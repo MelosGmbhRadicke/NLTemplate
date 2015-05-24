@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+
 #include "NLTemplate.h"
 
 
@@ -7,7 +9,9 @@ using namespace NL::Template;
 
 
 
-static void testFile() {
+static void createSimpleHTML() {
+
+    std::cout << "============== create simple-example.html ===================" << std::endl;
     const char *titles[ 3 ] = { "Chico", "Harpo", "Groucho" };
     const char *details[ 3 ] = { "Red", "Green", "Blue" };
 
@@ -35,39 +39,54 @@ static void testFile() {
         }
     }
 
-    t.render( cout ); // Render the template with the variables we've set above
+    std::ofstream htmlFile ("simple-example.html",std::ofstream::binary);
+    t.render( htmlFile ); // Render the template with the variables we've set above
+    htmlFile.close();
 
-    // =============== LaTeX ===============
-
-    std::cout << "=============================================================" << std::endl;
-    LoaderFile loader2;
-
-    Template t2( loader2 );
-    t2.load( "view/simple_plot.templat.tex" );      // Load & parse the main template and its dependencies.
-    t2.set( "town", "Augsburg" );    // Set a top-level variable
-    t2.render( cout ); // Render the template with the variables we've set above
 }
 
+static void createTeX() {
+    int repeatCount = 5;
+    const char *year[ repeatCount ] = { "2010", "2011", "2012", "2013", "2014" };
+    const char *administrationValuse[ repeatCount ] = { "50", "45", "55", "60", "50" };
+    const char *serviceValuse[ repeatCount ] = { "70", "85", "59", "65", "70" };
+    const char *developmentValuse[ repeatCount ] = { "60", "65", "69", "65", "70" };
 
-static void testMemory() {
-    LoaderMemory loader;
+    std::cout << "============== create plot-example.TeX ===================" << std::endl;
+    LoaderFile loader;
 
     Template t( loader );
+    t.load( "view/simple_plot.templat.tex" );      // Load & parse the main template and its dependencies.
+    t.set( "factory", "Muster GmbH" );    // Set a top-level variable
 
-    loader.add( "base", "<html><head>{{ title }}</head>\n<body><p>{% include text %}</p></body></html>\n" );
-    loader.add( "text", "Hi there, {{ name }}. How are you??" );
+    t.block( "administration" ).repeat( repeatCount );
+    for ( int i=0; i < repeatCount; i++ ) {
+        t.block( "administration" )[ i ].set( "year", year[ i ] );
+        t.block( "administration" )[ i ].set( "value", administrationValuse[ i ] );
+    }
 
-    t.load( "base" );
-    t.set( "title", "Testing memory loader" );
-    t.set( "name", "Stranger" );
+    t.block( "service" ).repeat( repeatCount );
+    for ( int i=0; i < repeatCount; i++ ) {
+        t.block( "service" )[ i ].set( "year", year[ i ] );
+        t.block( "service" )[ i ].set( "value", serviceValuse[ i ] );
+    }
 
-    t.render( cout );
+    t.block( "development" ).repeat( repeatCount );
+    for ( int i=0; i < repeatCount; i++ ) {
+        t.block( "development" )[ i ].set( "year", year[ i ] );
+        t.block( "development" )[ i ].set( "value", developmentValuse[ i ] );
+    }
+
+
+    std::ofstream teXfile ("plot-example.TeX",std::ofstream::binary);
+    t.render( teXfile ); // Render the template with the variables we've set above
+    teXfile.close();
+
 }
 
-
 int main(int, char *[] ) {
-    testFile();
-//     testMemory();
+    createSimpleHTML();
+    createTeX();
 
 
     return 0;
