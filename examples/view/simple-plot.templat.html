@@ -1,5 +1,15 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+
+    <title>HTML Export Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
@@ -22,7 +32,7 @@
         data.addRows([
           ['Administration', {{ valueadmin }}],
           ['Service', {{ valueservice }}],
-          ['Development', {{ valuedev }}],
+          ['Development', {{ valuedev }}]
         ]);
 
         // Set chart options
@@ -38,7 +48,35 @@
   </head>
 
   <body>
+
+    <h1>This is a export in html</h1>
+
+    <h2>You can have pie charts</h2>
     <!--Div that will hold the pie chart-->
     <div id="chart_div"></div>
+    <h2>Classic tables</h2>
+     <table class="table table-condensed"  width="60%">
+        <thead>
+            <tr>
+                <th class="col-md-1">Year</th>
+                <th class="col-md-1">Administration</th>
+                <th class="col-md-1">Service</th>
+                <th class="col-md-3">Development</th>
+            </tr>
+        </thead>
+        <tbody>{% block datatab %}
+            <tr>
+                <td class="col-md-1">{{ year }}</td>
+                <td class="col-md-1">{{ valueadmin }}</td>
+                <td class="col-md-1">{{ valueservice }}</td>
+                <td class="col-md-3">{{ valuedev }}</td>
+            </tr>{% endblock %}
+        </tbody>
+    </table>
+
+    <h2>As plot</h2>
+
+
+
   </body>
 </html>

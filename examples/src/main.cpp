@@ -53,11 +53,11 @@ static void createTeX() {
     const char *serviceValuse[ repeatCount ] = { "70", "85", "59", "65", "70" };
     const char *developmentValuse[ repeatCount ] = { "60", "65", "69", "65", "70" };
 
-    std::cout << "============== create /tmp/plot-example.TeX ===================" << std::endl;
+    std::cout << "============== create /tmp/plot-example.tex ===================" << std::endl;
     LoaderFile loader;
 
     Template t( loader );
-    t.load( "view/simple_plot.templat.tex" );      // Load & parse the main template and its dependencies.
+    t.load( "view/simple-plot.templat.tex" );      // Load & parse the main template and its dependencies.
     t.set( "factory", "Muster GmbH" );    // Set a top-level variable
 
     t.block( "administration" ).repeat( repeatCount );
@@ -93,8 +93,8 @@ static void createTeX() {
         t.block( "datatab" )[ i ].set( "valuedev", developmentValuse[ i ] );
     }
 
-    std::ofstream teXfile ("/tmp/plot-example.TeX",std::ofstream::binary);
-    t.render( teXfile ); // Render the template with the variables we've set above
+    std::ofstream teXfile ("/tmp/plot-example.tex",std::ofstream::binary);
+    t.render( teXfile );
     teXfile.close();
 
 }
@@ -102,6 +102,9 @@ static void createTeX() {
 static void createPlotHTML() {
 
     std::cout << "============== create /tmp/plot-example.html ===================" << std::endl;
+    // This Part using a google lib
+    // https://google-developers.appspot.com/chart/
+
     int repeatCount = 5;
     const char *year[ repeatCount ] = { "2010", "2011", "2012", "2013", "2014" };
     const char *administrationValuse[ repeatCount ] = { "50", "45", "55", "60", "50" };
@@ -110,14 +113,22 @@ static void createPlotHTML() {
     LoaderFile loader;
 
     Template t( loader );
-    t.load( "view/simple_plot.templat.html" );      // Load & parse the main template and its dependencies.
+    t.load( "view/simple-plot.templat.html" );      // Load & parse the main template and its dependencies.
     t.set( "factory", "Muster GmbH" );    // Set a top-level variable
     t.set( "valueadmin", administrationValuse[ 2 ] );
     t.set( "valueservice", serviceValuse[ 2 ] );
     t.set( "valuedev", developmentValuse[ 2 ] );
 
+    t.block( "datatab" ).repeat( repeatCount );
+    for ( int i=0; i < repeatCount; i++ ) {
+        t.block( "datatab" )[ i ].set( "year", year[ i ] );
+        t.block( "datatab" )[ i ].set( "valueadmin", administrationValuse[ i ] );
+        t.block( "datatab" )[ i ].set( "valueservice", serviceValuse[ i ] );
+        t.block( "datatab" )[ i ].set( "valuedev", developmentValuse[ i ] );
+    }
+
     std::ofstream htmlFile ("/tmp/plot-example.html",std::ofstream::binary);
-    t.render( htmlFile ); // Render the template with the variables we've set above
+    t.render( htmlFile );
     htmlFile.close();
 
 
