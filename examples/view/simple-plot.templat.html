@@ -14,25 +14,25 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
 
-      // Load the Visualization API and the piechart package.
-      google.load('visualization', '1.0', {'packages':['corechart']});
+        // Load the Visualization API and the piechart package.
+        google.load('visualization', '1.0', {'packages':['corechart']});
 
-      // Set a callback to run when the Google Visualization API is loaded.
-      google.setOnLoadCallback(drawChart);
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.setOnLoadCallback(drawChart);
 
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
-      function drawChart() {
+        // Callback that creates and populates a data table,
+        // instantiates the pie chart, passes in the data and
+        // draws it.
+        function drawChart() {
 
         // Create the data table.
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Topping');
         data.addColumn('number', 'Slices');
         data.addRows([
-          ['Administration', {{ valueadmin }}],
-          ['Service', {{ valueservice }}],
-          ['Development', {{ valuedev }}]
+            ['Administration', {{ valueadmin }}],
+            ['Service', {{ valueservice }}],
+            ['Development', {{ valuedev }}]
         ]);
 
         // Set chart options
@@ -43,7 +43,33 @@
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
         chart.draw(data, options);
-      }
+        }
+<!-- graphic 2 -->
+
+
+        google.load("visualization", "1", {'packages':["corechart"]});
+        google.setOnLoadCallback(drawVisualization);
+
+        function drawVisualization() {
+            // Some raw data (not necessarily accurate)
+            var data = google.visualization.arrayToDataTable([
+                ['Yaer', 'Administration', 'Service', 'Development'],{% block plotdata %}
+                ['{{ valueyear }}', {{ valueadmin }}, {{ valueservice }}, {{ valuedev }}]{{ seperator }}{% endblock %}
+            ]);
+
+            var options = {
+            title : 'Staff population by departments',
+            vAxis: {title: "Population"},
+            hAxis: {title: "Year"},
+            seriesType: "bars",
+            series: {3: {type: "line"}}
+            };
+
+            var chart = new google.visualization.ComboChart(document.getElementById('chart2_div'));
+            chart.draw(data, options);
+            }
+
+
     </script>
   </head>
 
@@ -76,6 +102,7 @@
 
     <h2>As plot</h2>
 
+        <div id="chart2_div" style="width: 900px; height: 500px;"></div>
 
 
   </body>

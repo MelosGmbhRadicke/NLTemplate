@@ -119,6 +119,22 @@ static void createPlotHTML() {
     t.set( "valueservice", serviceValuse[ 2 ] );
     t.set( "valuedev", developmentValuse[ 2 ] );
 
+
+    t.block( "plotdata" ).repeat( repeatCount );
+    for ( int i2=0; i2 < repeatCount; i2++ ) {
+        t.block( "plotdata" )[ i2 ].set( "valueyear", year[ i2 ] );
+        t.block( "plotdata" )[ i2 ].set( "valueadmin", administrationValuse[ i2 ] );
+        t.block( "plotdata" )[ i2 ].set( "valueservice", serviceValuse[ i2 ] );
+        t.block( "plotdata" )[ i2 ].set( "valuedev", developmentValuse[ i2 ] );
+        std::cout << i2 << std::endl;
+        if ( i2 == ( repeatCount - 1 ) ) {
+            t.block( "plotdata" )[ i2 ].set( "seperator", "" );
+        }else{
+            t.block( "plotdata" )[ i2 ].set( "seperator", "," );
+            std::cout << "kommer" << std::endl;
+        }
+    }
+
     t.block( "datatab" ).repeat( repeatCount );
     for ( int i=0; i < repeatCount; i++ ) {
         t.block( "datatab" )[ i ].set( "year", year[ i ] );
