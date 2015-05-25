@@ -85,6 +85,14 @@ static void createTeX() {
         t.block( "average" )[ i ].set( "value", std::to_string(average) );
     }
 
+    t.block( "datatab" ).repeat( repeatCount );
+    for ( int i=0; i < repeatCount; i++ ) {
+        t.block( "datatab" )[ i ].set( "year", year[ i ] );
+        t.block( "datatab" )[ i ].set( "valueadmin", administrationValuse[ i ] );
+        t.block( "datatab" )[ i ].set( "valueservice", serviceValuse[ i ] );
+        t.block( "datatab" )[ i ].set( "valuedev", developmentValuse[ i ] );
+    }
+
     std::ofstream teXfile ("/tmp/plot-example.TeX",std::ofstream::binary);
     t.render( teXfile ); // Render the template with the variables we've set above
     teXfile.close();
