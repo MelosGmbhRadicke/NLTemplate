@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-
+#include <string>
 
 #include "NLTemplate.h"
 
@@ -99,9 +99,34 @@ static void createTeX() {
 
 }
 
+static void createPlotHTML() {
+
+    std::cout << "============== create /tmp/plot-example.html ===================" << std::endl;
+    int repeatCount = 5;
+    const char *year[ repeatCount ] = { "2010", "2011", "2012", "2013", "2014" };
+    const char *administrationValuse[ repeatCount ] = { "50", "45", "55", "60", "50" };
+    const char *serviceValuse[ repeatCount ] = { "70", "85", "59", "65", "70" };
+    const char *developmentValuse[ repeatCount ] = { "60", "65", "69", "65", "70" };
+    LoaderFile loader;
+
+    Template t( loader );
+    t.load( "view/simple_plot.templat.html" );      // Load & parse the main template and its dependencies.
+    t.set( "factory", "Muster GmbH" );    // Set a top-level variable
+    t.set( "valueadmin", administrationValuse[ 2 ] );
+    t.set( "valueservice", serviceValuse[ 2 ] );
+    t.set( "valuedev", developmentValuse[ 2 ] );
+
+    std::ofstream htmlFile ("/tmp/plot-example.html",std::ofstream::binary);
+    t.render( htmlFile ); // Render the template with the variables we've set above
+    htmlFile.close();
+
+
+}
+
 int main(int, char *[] ) {
     createSimpleHTML();
     createTeX();
+    createPlotHTML();
 
 
     return 0;
