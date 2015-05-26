@@ -10,49 +10,6 @@ using namespace std;
 using namespace NL::Template;
 
 
-
-static void createSimpleHTML() {
-
-    std::cout << "============== create /tmp/simple-example.html ===================" << std::endl;
-    std::vector<std::string>  titles;
-    titles.push_back("Chico");
-    titles.push_back("Harpo");
-    titles.push_back("Groucho");
-    std::vector<std::string>  details;
-    details.push_back("Red");
-    details.push_back("Green");
-    details.push_back("Blue");
-
-    LoaderFile loader; // Let's use the default loader that loads files from disk.
-
-    Template t( loader );
-
-    t.load( "view/test.txt" );      // Load & parse the main template and its dependencies.
-    t.set( "text", "Hello, world" );    // Set a top-level variable
-    t.block( "items" ).repeat( 3 );     // We need to know in advance that the "items" block will repeat 3 times.
-
-    // Let's fill in the data for the repeated block.
-    for ( int i=0; i < 3; i++ ) {
-        // Set title and text by accessing the variable directly
-        t.block( "items" )[ i ].set( "title", titles[ i ] );
-        t.block( "items" )[ i ].set( "text", "Lorem Ipsum" );
-
-        // We can get a shortcut reference to a nested block
-        Block & block = t.block( "items" )[ i ].block( "detailblock" );
-        block.set( "detail", details[ i ] );
-
-        // Disable this block for the first item in the list. Can be useful for opening/closing HTML tables etc.
-        if ( i==0 ) {
-            block.disable();
-        }
-    }
-
-    std::ofstream htmlFile ("/tmp/simple-example.html",std::ofstream::binary);
-    t.render( htmlFile ); // Render the template with the variables we've set above
-    htmlFile.close();
-
-}
-
 static void createTeX() {
     const int repeatCount = 5;
     std::vector<std::string>  year;
@@ -82,7 +39,6 @@ static void createTeX() {
 
     std::cout << "============== create /tmp/plot-example.tex ===================" << std::endl;
     LoaderFile loader;
-
     Template t( loader );
     t.load( "view/simple-plot.templat.tex" );      // Load & parse the main template and its dependencies.
     t.set( "factory", "Muster GmbH" );    // Set a top-level variable
@@ -198,7 +154,6 @@ static void createPlotHTML() {
 }
 
 int main(int, char *[] ) {
-    createSimpleHTML();
     createTeX();
     createPlotHTML();
 
