@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 
 #include "NLTemplate.h"
 
@@ -13,8 +14,14 @@ using namespace NL::Template;
 static void createSimpleHTML() {
 
     std::cout << "============== create /tmp/simple-example.html ===================" << std::endl;
-    const char *titles[ 3 ] = { "Chico", "Harpo", "Groucho" };
-    const char *details[ 3 ] = { "Red", "Green", "Blue" };
+    std::vector<std::string>  titles;
+    titles.push_back("Chico");
+    titles.push_back("Harpo");
+    titles.push_back("Groucho");
+    std::vector<std::string>  details;
+    details.push_back("Red");
+    details.push_back("Green");
+    details.push_back("Blue");
 
     LoaderFile loader; // Let's use the default loader that loads files from disk.
 
@@ -47,11 +54,31 @@ static void createSimpleHTML() {
 }
 
 static void createTeX() {
-    int repeatCount = 5;
-    const char *year[ repeatCount ] = { "2010", "2011", "2012", "2013", "2014" };
-    const char *administrationValuse[ repeatCount ] = { "50", "45", "55", "60", "50" };
-    const char *serviceValuse[ repeatCount ] = { "70", "85", "59", "65", "70" };
-    const char *developmentValuse[ repeatCount ] = { "60", "65", "69", "65", "70" };
+    const int repeatCount = 5;
+    std::vector<std::string>  year;
+    year.push_back("2010");
+    year.push_back("2011");
+    year.push_back("2012");
+    year.push_back("2013");
+    year.push_back("2014");
+    std::vector<std::string>  administrationValuse;
+    administrationValuse.push_back("50");
+    administrationValuse.push_back("45");
+    administrationValuse.push_back("55");
+    administrationValuse.push_back("60");
+    administrationValuse.push_back("50");
+    std::vector<std::string>  serviceValuse;
+    serviceValuse.push_back("70");
+    serviceValuse.push_back("85");
+    serviceValuse.push_back("59");
+    serviceValuse.push_back("65");
+    serviceValuse.push_back("70");
+    std::vector<std::string>  developmentValuse;
+    developmentValuse.push_back("60");
+    developmentValuse.push_back("65");
+    developmentValuse.push_back("69");
+    developmentValuse.push_back("65");
+    developmentValuse.push_back("70");
 
     std::cout << "============== create /tmp/plot-example.tex ===================" << std::endl;
     LoaderFile loader;
@@ -105,11 +132,31 @@ static void createPlotHTML() {
     // This Part using a google lib
     // https://google-developers.appspot.com/chart/
 
-    int repeatCount = 5;
-    const char *year[ repeatCount ] = { "2010", "2011", "2012", "2013", "2014" };
-    const char *administrationValuse[ repeatCount ] = { "50", "45", "55", "60", "50" };
-    const char *serviceValuse[ repeatCount ] = { "70", "85", "59", "65", "70" };
-    const char *developmentValuse[ repeatCount ] = { "60", "65", "69", "65", "70" };
+    const int repeatCount = 5;
+    std::vector<std::string>  year;
+    year.push_back("2010");
+    year.push_back("2011");
+    year.push_back("2012");
+    year.push_back("2013");
+    year.push_back("2014");
+    std::vector<std::string>  administrationValuse;
+    administrationValuse.push_back("50");
+    administrationValuse.push_back("45");
+    administrationValuse.push_back("55");
+    administrationValuse.push_back("60");
+    administrationValuse.push_back("50");
+    std::vector<std::string>  serviceValuse;
+    serviceValuse.push_back("70");
+    serviceValuse.push_back("85");
+    serviceValuse.push_back("59");
+    serviceValuse.push_back("65");
+    serviceValuse.push_back("70");
+    std::vector<std::string>  developmentValuse;
+    developmentValuse.push_back("60");
+    developmentValuse.push_back("65");
+    developmentValuse.push_back("69");
+    developmentValuse.push_back("65");
+    developmentValuse.push_back("70");
     LoaderFile loader;
 
     Template t( loader );

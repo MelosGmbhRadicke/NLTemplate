@@ -12,7 +12,7 @@ add_executable(
     export-generator src/main.cpp
 )
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11 -lnlpemplate ")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -g -std=c++11 -lnlpemplate ")
 
 # add the install targets
 install (TARGETS export-generator DESTINATION bin)
