@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <title>HTML Export Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+        // Load the Visualization API and the piechart package.
+        google.load('visualization', '1.0', {'packages':['corechart']});
+
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.setOnLoadCallback(drawChart);
+
+        // Callback that creates and populates a data table,
+        // instantiates the pie chart, passes in the data and
+        // draws it.
+        function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+            ['Administration', {{ valueadmin }}],
+            ['Service', {{ valueservice }}],
+            ['Development', {{ valuedev }}]
+        ]);
+
+        // Set chart options
+        var options = {'title':'Staff by departments',
+                       'width':400,
+                       'height':300};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+        }
+<!-- graphic 2 -->
+
+
+        google.load("visualization", "1", {'packages':["corechart"]});
+        google.setOnLoadCallback(drawVisualization);
+
+        function drawVisualization() {
+            // Some raw data (not necessarily accurate)
+            var data = google.visualization.arrayToDataTable([
+                ['Yaer', 'Administration', 'Service', 'Development'],{% block plotdata %}
+                ['{{ valueyear }}', {{ valueadmin }}, {{ valueservice }}, {{ valuedev }}]{{ seperator }}{% endblock %}
+            ]);
+
+            var options = {
+            title : 'Staff population by departments',
+            vAxis: {title: "Population"},
+            hAxis: {title: "Year"},
+            seriesType: "bars",
+            series: {3: {type: "line"}}
+            };
+
+            var chart = new google.visualization.ComboChart(document.getElementById('chart2_div'));
+            chart.draw(data, options);
+            }
+
+
+    </script>
+  </head>
+
+  <body>
+
+    <h1>This is a export in html</h1>
+
+    <h2>You can have pie charts</h2>
+    <!--Div that will hold the pie chart-->
+    <div id="chart_div"></div>
+    <h2>Classic tables</h2>
+     <table class="table table-condensed"  width="60%">
+        <thead>
+            <tr>
+                <th class="col-md-1">Year</th>
+                <th class="col-md-1">Administration</th>
+                <th class="col-md-1">Service</th>
+                <th class="col-md-3">Development</th>
+            </tr>
+        </thead>
+        <tbody>{% block datatab %}
+            <tr>
+                <td class="col-md-1">{{ year }}</td>
+                <td class="col-md-1">{{ valueadmin }}</td>
+                <td class="col-md-1">{{ valueservice }}</td>
+                <td class="col-md-3">{{ valuedev }}</td>
+            </tr>{% endblock %}
+        </tbody>
+    </table>
+
+    <h2>As plot</h2>
+
+        <div id="chart2_div" style="width: 900px; height: 500px;"></div>
+
+
+  </body>
+</html>
